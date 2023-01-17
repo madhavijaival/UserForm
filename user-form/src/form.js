@@ -1,23 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
-// function Form() {
-//   const [fullName, setFullName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [occupation, setOccupation] = useState('');
-//   const [state, setState] = useState('');
-//   const [occupations, setOccupations] = useState([]);
-//   const [states, setStates] = useState([]);
-
-//   // Fetch the options for occupation and state on component mount
-//   React.useEffect(() => {
-//     fetch('https://frontend-take-home.fetchrewards.com/form')
-//       .then(response => response.json())
-//       .then(data => {
-//         setOccupations(data.occupations);
-//         setStates(data.states);
-//       });
-//   }, []);
 function Form() {
     const [formData, setFormData] = useState({
       fullName: '',
@@ -29,7 +12,7 @@ function Form() {
     const [occupations, setOccupations] = useState([]);
     const [states, setStates] = useState([]);
     const [errors, setErrors] = useState({}); 
-    const [successMessage, setSuccessMessage] = useState('');
+   
   
     // Fetch the options for occupation and state on component mount
     React.useEffect(() => {
@@ -75,16 +58,18 @@ fetch('https://frontend-take-home.fetchrewards.com/form', {
   })
   .then(data => {
     console.log('User created successfully!', data);
-    
-   
   })
-  .catch(error => {
-    console.error('Error creating user:', error);
-  });
+     setErrors({});
+    //console.error('Error creating user:', error);
+    toast.success("Application submitted!", {
+        position: "top-center"
+    });
+  
 };
 
 return (
     <form onSubmit={handleSubmit}>
+    <legend>Fill Your Fetch application Form</legend>
     <label>
     Full Name:
     <input
@@ -96,136 +81,52 @@ return (
     </label>
     <br />
     <label>
-Email:
-<input
-type="email"
-value={formData.email}
-onChange={event => setFormData({ ...formData, email: event.target.value })}
-/>
-{errors.email && <div>{errors.email}</div>}
-</label>
-<br />
-<label>
-Password:
-<input
-type="password"
-value={formData.password}
-onChange={event => setFormData({ ...formData, password: event.target.value })}
-/>
-{errors.password && <div>{errors.password}</div>}
-</label>
-<br />
-<label>
-Occupation:
-<select value={formData.occupation} onChange={event => setFormData({ ...formData, occupation: event.target.value })}>
-{occupations.map(occ => (
-<option key={occ} value={occ}>
-{occ}
-</option>
-))}
-</select>
-{errors.occupation && <div>{errors.occupation}</div>}
-</label>
-<br />
-<label>
-State:
-<select value={formData.state} onChange={event => setFormData({ ...formData, state: event.target.value })}>
-{states.map(st => (
-<option key={st.abbreviation} value={st.name}>
-{st.name}
-</option>
-))}
-</select>
-{errors.state && <div>{errors.state}</div>}
-</label>
-<br />
-<button type="submit">Submit</button>
-</form>
-);
+        Email:
+     <input
+        type="email"
+        value={formData.email}
+        onChange={event => setFormData({ ...formData, email: event.target.value })}
+      />
+     {errors.email && <div>{errors.email}</div>}
+    </label>
+     <br />
+     <label>
+     Password:
+     <input
+     type="password"
+     value={formData.password}
+    onChange={event => setFormData({ ...formData, password: event.target.value })}
+      />
+    {errors.password && <div>{errors.password}</div>}
+    </label>
+    <br />
+    <label>
+    Occupation:
+    <select value={formData.occupation} onChange={event => setFormData({ ...formData, occupation: event.target.value })}>
+    {occupations.map(occ => (
+    <option key={occ} value={occ}>
+     {occ}
+    </option>
+    ))}
+    </select>
+    {errors.occupation && <div>{errors.occupation}</div>}
+    </label>
+    <br />
+    <label>
+      State:
+     <select value={formData.state} onChange={event => setFormData({ ...formData, state: event.target.value })}>
+     {states.map(st => (
+    <option key={st.abbreviation} value={st.name}>
+    {st.name}
+    </option> ))}
+    </select>
+     {errors.state && <div>{errors.state}</div>}
+    </label>
+    <br />
+     <button type="submit">Submit</button>
+    </form>
+   );
 }
 
 export default Form;
     
-
-//   const handleSubmit = event => {
-//     event.preventDefault();
-//     if (!fullName || !email || !password || !occupation || !state) {
-//       return;
-//     }
-//     fetch('https://frontend-take-home.fetchrewards.com/form', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         name: fullName,
-//         email: email,
-//         password: password,
-//         occupation: occupation,
-//         state: state
-//       })
-//     })
-//       .then(response => {
-//         if (response.status === 201) {
-//           console.log("User created successfully!");
-//         }
-//       });
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <label>
-//         Full Name:
-//         <input
-//           type="text"
-//           value={fullName}
-//           onChange={event => setFullName(event.target.value)}
-//         />
-//       </label>
-//       <br />
-//       <label>
-//         Email:
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={event => setEmail(event.target.value)}
-//         />
-//       </label>
-//       <br />
-//       <label>
-//         Password:
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={event => setPassword(event.target.value)}
-//         />
-//       </label>
-//       <br />
-//       <label>
-//         Occupation:
-//         <select value={occupation} onChange={event => setOccupation(event.target.value)}>
-//           {occupations.map(occ => (
-//             <option key={occ} value={occ}>
-//               {occ}
-//             </option>
-//           ))}
-//         </select>
-//       </label>
-//       <br />
-//       <label>
-//         State:
-//         <select value={state} onChange={event => setState(event.target.value)}>
-//           {states.map(st => (
-//             <option key={st.id} value = {st.name}>
-//             {st.name}
-//             </option>
-//             ))}
-//             </select>
-//             </label>
-//             <br />
-//             <button type="submit">Submit</button>
-//             </form>
-//             );
-//             }
-            
-//             export default Form;
