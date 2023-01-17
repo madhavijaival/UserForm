@@ -69,7 +69,7 @@ fetch('https://frontend-take-home.fetchrewards.com/form', {
 
 return (
     <form onSubmit={handleSubmit}>
-    <legend>Fill Your Fetch application Form</legend>
+    <legend>Fill your application form</legend>
     <label>
     Full Name:
     <input

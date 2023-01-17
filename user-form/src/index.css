@@ -9,8 +9,9 @@ body {
 
 /* Form container */
 form {
-  background: white;
-  border: 1px solid #dedede;
+  background: LavenderBlush;
+  margin-top: 20px;
+  border: 2px solid #dedede;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -40,11 +41,12 @@ label {
 /* Form container */
 
 form legend{
-  font-weight: bold;
-  font-size:x-large ;
-  margin-top: auto;
-  padding: 30px;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  font-size: x-large;
+  font-weight: bold;
+  padding: 8%;
 }
 
 /* Form submit button */
