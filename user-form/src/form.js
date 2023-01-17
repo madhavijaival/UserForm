@@ -75,7 +75,8 @@ fetch('https://frontend-take-home.fetchrewards.com/form', {
   })
   .then(data => {
     console.log('User created successfully!', data);
-    setSuccessMessage('Form submitted successfully');
+    
+   
   })
   .catch(error => {
     console.error('Error creating user:', error);
