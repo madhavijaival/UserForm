@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
+
 function Form() {
     const [formData, setFormData] = useState({
       fullName: '',
@@ -14,7 +15,7 @@ function Form() {
     const [errors, setErrors] = useState({}); 
    
   
-    // Fetch the options for occupation and state on component mount
+    // Fetching options for occupation and state on component mount
     React.useEffect(() => {
       fetch('https://frontend-take-home.fetchrewards.com/form')
         .then(response => response.json())
@@ -26,7 +27,8 @@ function Form() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    //Validate the form before submitting
+
+    //Validating the form before submitting
     let formErrors = {};
     if (!formData.fullName) formErrors.fullName = "Full name is required";
     if (!formData.email) formErrors.email = "Email is required";
@@ -35,6 +37,7 @@ function Form() {
     if (!formData.state) formErrors.state = "State is required";
      setErrors(formErrors);
   if (Object.keys(formErrors).length) return;
+
   //If form is valid, make the POST request
 fetch('https://frontend-take-home.fetchrewards.com/form', {
     method: 'POST',
@@ -58,18 +61,26 @@ fetch('https://frontend-take-home.fetchrewards.com/form', {
   })
   .then(data => {
     console.log('User created successfully!', data);
+    setFormData({
+      fullName: '',
+      email: '',
+      password: '',
+      occupation: '',
+      state: '',
+  });  
   })
      setErrors({});
-    //console.error('Error creating user:', error);
     toast.success("Application submitted!", {
         position: "top-center"
     });
+   
   
 };
 
 return (
     <form onSubmit={handleSubmit}>
     <legend>Fill your application form</legend>
+
     <label>
     Full Name:
     <input
@@ -80,6 +91,7 @@ return (
     {errors.fullName && <div>{errors.fullName}</div>}
     </label>
     <br />
+
     <label>
         Email:
      <input
@@ -90,16 +102,19 @@ return (
      {errors.email && <div>{errors.email}</div>}
     </label>
      <br />
+
      <label>
      Password:
      <input
      type="password"
+     minLength= {6}
      value={formData.password}
     onChange={event => setFormData({ ...formData, password: event.target.value })}
       />
     {errors.password && <div>{errors.password}</div>}
     </label>
     <br />
+
     <label>
     Occupation:
     <select value={formData.occupation} onChange={event => setFormData({ ...formData, occupation: event.target.value })}>
@@ -112,6 +127,7 @@ return (
     {errors.occupation && <div>{errors.occupation}</div>}
     </label>
     <br />
+
     <label>
       State:
      <select value={formData.state} onChange={event => setFormData({ ...formData, state: event.target.value })}>
